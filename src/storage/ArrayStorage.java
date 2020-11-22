@@ -9,9 +9,8 @@ import java.util.Arrays;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-
     @Override
-    protected void doSave(Resume r) {
+    protected void doSave(Resume r, int index) {
         storage[size] = r;
         size++;
     }
@@ -23,6 +22,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void doDelete(String uuid, int index) {
+        //TODO CHECK - SOMETHING WRONG
         storage[index] = storage[size - 1];
         storage[size - 1] = null;
         size--;

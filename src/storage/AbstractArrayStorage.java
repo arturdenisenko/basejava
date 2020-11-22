@@ -11,18 +11,16 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size = 0;
 
     public void save(Resume r) {
-        if (getIndex(r.getUuid()) != -1) {
-            System.out.println("model.Resume with UUID " + r.getUuid() + " already exists");
+        //TODO CHECK SAVE METHOD
+        int index = getIndex(r.getUuid());
+        if (index != -1) {
+            System.out.println("Resume with UUID " + r.getUuid() + " already exists");
+        } else if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow");
         } else {
-            if (size == storage.length) {
-                System.out.println("Storage are overflow");
-            } else {
-                doSave(r);
-            }
+            doSave(r, index);
         }
     }
-
-    protected abstract void doSave(Resume r);
 
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
@@ -32,8 +30,6 @@ public abstract class AbstractArrayStorage implements Storage {
             doUpdate(r, index);
         }
     }
-
-    protected abstract void doUpdate(Resume r, int index);
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
@@ -45,7 +41,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     }
 
-    protected abstract void doDelete(String uuid, int index);
 
     public void clear() {
         //https://stackoverflow.com/questions/8585879/how-to-remove-all-elements-in-string-array-in-java
@@ -69,6 +64,12 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size());
     }
+
+    protected abstract void doUpdate(Resume r, int index);
+
+    protected abstract void doSave(Resume r, int index);
+
+    protected abstract void doDelete(String uuid, int index);
 
     protected abstract int getIndex(String uuid);
 }
