@@ -29,30 +29,30 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > 0) {
-            storage[index] = r;
-        } else {
+        if (index == -1) {
             System.out.println("Resume with UUID " + r.getUuid() + " are not  exists");
+        } else {
+            storage[index] = r;
         }
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        } else {
+        if (index == -1) {
             System.out.println("The Resume with uuid " + uuid + " are not exists");
             return null;
+        } else {
+            return storage[index];
         }
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index > 0) {
+        if (index == -1) {
+            System.out.println("Resume with UUID " + uuid + " are not  exists");
+        } else {
             System.arraycopy(storage, index + 1, storage, index, size() - index);
             size--;
-        } else {
-            System.out.println("Resume with UUID " + uuid + " are not  exists");
         }
 
     }
