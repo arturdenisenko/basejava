@@ -11,9 +11,8 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size = 0;
 
     public void save(Resume r) {
-        //TODO CHECK SAVE METHOD
         int index = getIndex(r.getUuid());
-        if (index != -1) {
+        if (index >= 0) {
             System.out.println("Resume with UUID " + r.getUuid() + " already exists");
         } else if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow");
@@ -38,9 +37,7 @@ public abstract class AbstractArrayStorage implements Storage {
         } else {
             doDelete(uuid, index);
         }
-
     }
-
 
     public void clear() {
         //https://stackoverflow.com/questions/8585879/how-to-remove-all-elements-in-string-array-in-java
@@ -65,7 +62,9 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOfRange(storage, 0, size());
     }
 
-    protected abstract void doUpdate(Resume r, int index);
+    protected void doUpdate(Resume r, int index) {
+        storage[index] = r;
+    }
 
     protected abstract void doSave(Resume r, int index);
 
