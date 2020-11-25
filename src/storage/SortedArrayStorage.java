@@ -3,14 +3,12 @@ package storage;
 import model.Resume;
 
 import java.util.Arrays;
-import java.util.stream.DoubleStream;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void doDelete(String uuid, int index) {
         System.arraycopy(storage, index + 1, storage, index, size() - index);
-        size--;
     }
 
     @Override
@@ -22,8 +20,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }

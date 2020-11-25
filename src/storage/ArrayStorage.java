@@ -2,8 +2,6 @@ package storage;
 
 import model.Resume;
 
-import java.util.Arrays;
-
 /**
  * Array based storage for Resumes
  */
@@ -19,7 +17,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         //TODO CHECK - SOMETHING WRONG
         storage[index] = storage[size - 1];
         storage[size - 1] = null;
-        size--;
     }
 
     /**
