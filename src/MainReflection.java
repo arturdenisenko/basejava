@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MainReflection {
-    public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static void main(String[] args) {
 
         //Field field = r.getClass().getDeclaredFields()[0];
         //field.setAccessible(true);
@@ -12,9 +12,20 @@ public class MainReflection {
         //field.set(r,"FFFF-fasdfads-0006346sa");
         //TODO : invoke r.toString via reflection
         Resume r = new Resume();
-        Method declaredMethod = r.getClass().getDeclaredMethod("ToString", Resume.class);
-        declaredMethod.invoke(r);
-        System.out.println(declaredMethod.getName());
-        // System.out.println(r);
+        System.out.println("Called by reflection:     " + doReflectionCall(r, "toString", new Object[]{}, String.class));
+
+    }
+
+    //https://stackoverflow.com/questions/55239721/call-objects-tostring-method-from-class-class
+    @SuppressWarnings("unchecked")
+    public static <T, E> E doReflectionCall(T obj, String methodName, Object[] arguments, Class<E> returnClazz) {
+        try {
+            Class<?> clazz = obj.getClass();
+            Method myMethod = clazz.getDeclaredMethod(methodName);
+            return (E) myMethod.invoke(obj, arguments);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
