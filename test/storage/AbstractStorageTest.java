@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static storage.AbstractArrayStorage.STORAGE_LIMIT;
 
-public abstract class AbstractArrayStorageTest {
+public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
@@ -26,7 +26,7 @@ public abstract class AbstractArrayStorageTest {
 
     private final Resume RESUME_4 = new Resume(UUID_4);
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 

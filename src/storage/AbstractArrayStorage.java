@@ -1,7 +1,5 @@
 package storage;
 
-import exception.ExistStorageException;
-import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 
@@ -13,52 +11,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (size == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", r.getUuid());
-        } else {
-            doSave(r, index);
-            size++;
-        }
-    }
-
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            doUpdate(r, index);
-        }
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            doDelete(uuid, index);
-            size--;
-        }
-    }
-
-    public void clear() {
+    public void doClear() {
         //https://stackoverflow.com/questions/8585879/how-to-remove-all-elements-in-string-array-in-java
         Arrays.fill(storage, null);
         size = 0;
     }
 
-    public int size() {
+    public int getStorageSize() {
         return size;
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    public Resume doGet(int index, String uuid) {
         return storage[index];
     }
 
@@ -70,8 +33,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[index] = r;
     }
 
-    protected abstract void doSave(Resume r, int index);
+    protected void doSave(Resume r, int index) {
+        if (size == STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow", r.getUuid());
+        } else {
+            doArraySave(r, index);
+        }
+    }
+
+    protected abstract void doArraySave(Resume r, int index);
 
     protected abstract void doDelete(String uuid, int index);
-
 }
