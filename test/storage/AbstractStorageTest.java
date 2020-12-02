@@ -7,6 +7,8 @@ import model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static storage.AbstractArrayStorage.STORAGE_LIMIT;
 
@@ -55,7 +57,6 @@ public abstract class AbstractStorageTest {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
         assertTrue(newResume == storage.get(UUID_1));
-
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -83,7 +84,6 @@ public abstract class AbstractStorageTest {
         assertGet(RESUME_3);
     }
 
-
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
         storage.get("dummy");
@@ -102,11 +102,12 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] testStorage = storage.getAll();
-        assertEquals(3, testStorage.length);
-        assertEquals(RESUME_1, testStorage[0]);
-        assertEquals(RESUME_2, testStorage[1]);
-        assertEquals(RESUME_3, testStorage[2]);
+        List<Resume> testStorage;
+        testStorage = storage.getAllSorted();
+        assertEquals(3, testStorage.size());
+        assertEquals(RESUME_1, testStorage.get(0));
+        assertEquals(RESUME_2, testStorage.get(1));
+        assertEquals(RESUME_3, testStorage.get(2));
     }
 
     @Test(expected = StorageException.class)

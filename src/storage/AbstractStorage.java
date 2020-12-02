@@ -67,11 +67,6 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
-
-    @Override
     public int size() {
         return getStorageSize();
     }
