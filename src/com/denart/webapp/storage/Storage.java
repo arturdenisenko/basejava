@@ -9,6 +9,8 @@ public interface Storage {
 
     public Resume get(String uuid);
 
+    public void update(Resume r);
+
 
     public void delete(String uuid);
     /**
