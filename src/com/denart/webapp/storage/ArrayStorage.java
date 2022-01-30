@@ -1,25 +1,29 @@
+package com.denart.webapp.storage;
+
+import com.denart.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, null);
         size = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         if (size <= 10000) {
             storage[size] = r;
             size++;
         }
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         int index = getResume(uuid);
         if (index >= 0) {
             return storage[index];
@@ -29,14 +33,14 @@ public class ArrayStorage {
 
     private int getResume(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].uuid)) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
         return -1;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         int index = getResume(uuid);
         if (index >= 0) {
             storage[index] = null;
@@ -49,11 +53,11 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 }
