@@ -18,7 +18,7 @@ public class ArrayStorage implements Storage {
 
     public void save(Resume r) {
         if (size <= 10000) {
-            if (getResume(r.getUuid()) == -1) {
+            if (getIndex(r.getUuid()) == -1) {
                 storage[size] = r;
                 size++;
             } else {
@@ -30,7 +30,7 @@ public class ArrayStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        int index = getResume(uuid);
+        int index = getIndex(uuid);
         if (index >= 0) {
             return storage[index];
         }
@@ -39,24 +39,14 @@ public class ArrayStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        int index = getResume(r.getUuid());
+        int index = getIndex(r.getUuid());
         if (index >= 0) {
             storage[index] = r;
         }
     }
 
-    private int getResume(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return i;
-            }
-        }
-        System.out.println("ERROR - There is no resume with uuid - \"" + uuid + "\" in current storage");
-        return -1;
-    }
-
     public void delete(String uuid) {
-        int index = getResume(uuid);
+        int index = getIndex(uuid);
         if (index >= 0) {
             storage[index] = null;
             System.arraycopy(storage, index + 1, storage, index, size);
@@ -74,5 +64,15 @@ public class ArrayStorage implements Storage {
 
     public int size() {
         return size;
+    }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return i;
+            }
+        }
+        System.out.println("ERROR - There is no resume with uuid - \"" + uuid + "\" in current storage");
+        return -1;
     }
 }
