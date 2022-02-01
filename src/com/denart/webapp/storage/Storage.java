@@ -2,22 +2,21 @@ package com.denart.webapp.storage;
 
 import com.denart.webapp.model.Resume;
 
-public interface Storage {
-    public void clear();
+public interface   Storage {
+    void clear();
 
-    public void save(Resume r);
+    void save(Resume r);
 
-    public Resume get(String uuid);
+    Resume get(String uuid);
 
-    public void update(Resume r);
+    void update(Resume r);
 
-
-    public void delete(String uuid);
+    void delete(String uuid);
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAll();
+    Resume[] getAll();
 
-    public int size();
+    int size();
 
 }
