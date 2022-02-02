@@ -1,5 +1,8 @@
 package com.denart.webapp.storage;
 
+import com.denart.webapp.exception.ExistStorageException;
+import com.denart.webapp.exception.NotExistStorageException;
+import com.denart.webapp.exception.StorageException;
 import com.denart.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -15,8 +18,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.println("Resume " + uuid + " not exist");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     @Override
@@ -27,10 +29,10 @@ public abstract class AbstractArrayStorage implements Storage {
                 doSave(r, index);
                 size++;
             } else {
-                System.out.println("ERROR to save Resume with uuid -  \"" + r.getUuid() + " is in storage already");
+                throw new ExistStorageException(r.getUuid());
             }
         } else {
-            System.out.println("ERROR - The Storage is OverFlow now..Plz delete something");
+            throw new StorageException("Storage overflow " + r.getUuid());
         }
     }
 
@@ -42,7 +44,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("ERROR - There is no resume with uuid - \"" + uuid + "\" in current storage");
+            throw new NotExistStorageException(uuid);
         }
     }
 
