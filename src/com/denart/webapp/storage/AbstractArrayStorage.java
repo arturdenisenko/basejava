@@ -38,8 +38,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
-            storage[index] = null;
-            System.arraycopy(storage, index + 1, storage, index, size);
+            doDelete(index);
+            storage[size - 1] = null;
             size--;
         } else {
             System.out.println("ERROR - There is no resume with uuid - \"" + uuid + "\" in current storage");
@@ -71,6 +71,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public int size() {
         return size;
     }
+
+    protected abstract void doDelete(int index);
 
     protected abstract void doSave(Resume r, int index);
 

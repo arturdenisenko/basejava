@@ -8,6 +8,11 @@ import com.denart.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
+    protected void doDelete(int index) {
+        storage[index] = storage[size - 1];
+    }
+
+    @Override
     protected void doSave(Resume r, int index) {
         storage[size] = r;
     }
