@@ -53,6 +53,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
             storage[index] = r;
+        } else {
+            throw new NotExistStorageException(r.getUuid());
         }
     }
 
