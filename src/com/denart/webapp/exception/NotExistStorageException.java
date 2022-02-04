@@ -5,3 +5,4 @@ public class NotExistStorageException extends StorageException {
         super("Resume " + uuid + "are not exist", uuid);
     }
 }
+
