@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUME_3 = new Resume(UUID_3);
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
-    private static final Resume [] resumeList = {RESUME_1, RESUME_2, RESUME_3};
+    private static final Resume [] RESUMES_EQUALENT_LIST = {RESUME_1, RESUME_2, RESUME_3};
 
     public AbstractArrayStorageTest(AbstractArrayStorage storage) {
         this.storage = storage;
@@ -105,7 +105,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void getAll() {
         Resume[] resumes = storage.getAll();
-        assertArrayEquals(resumes,resumeList);
+        assertArrayEquals(resumes, RESUMES_EQUALENT_LIST);
     }
 
     @Test
