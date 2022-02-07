@@ -7,26 +7,17 @@ import com.denart.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10_000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
-    }
-
-    @Override
-    public void save(Resume r) {
+    protected void doSave(Resume r) {
         if (size < STORAGE_LIMIT) {
             int index = getIndex(r.getUuid());
             if (index < 0) {
-                doSave(r, index);
+                insertElement(r, index);
                 size++;
             } else {
                 throw new ExistStorageException(r.getUuid());
@@ -37,19 +28,22 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            doDelete(index);
-            storage[size - 1] = null;
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    protected void doClear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     @Override
-    public void update(Resume r) {
+    protected Resume doGet(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            return storage[index];
+        }
+        throw new NotExistStorageException(uuid);
+    }
+
+    @Override
+    protected void doUpdate(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
             storage[index] = r;
@@ -59,26 +53,33 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
+    protected void doDelete(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            fillDeletedElement(index);
+            storage[size - 1] = null;
+            size--;
+        } else {
+            throw new NotExistStorageException(uuid);
+        }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAll() {
+    @Override
+    protected Resume[] doGetAllResumes() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
     @Override
-    public int size() {
+    protected int getStorageSize() {
         return size;
     }
 
-    protected abstract void doDelete(int index);
+    protected abstract void fillDeletedElement(int index);
 
-    protected abstract void doSave(Resume r, int index);
+    protected abstract void insertElement(Resume r, int index);
 
     protected abstract int getIndex(String uuid);
 }

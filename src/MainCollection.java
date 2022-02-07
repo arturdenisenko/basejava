@@ -1,9 +1,6 @@
 import com.denart.webapp.model.Resume;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class MainCollection {
     private static final String UUID_1 = "uuid1";
@@ -46,5 +43,28 @@ public class MainCollection {
         }
 
         System.out.println(collection.toString());
+
+        Map<String, Resume> stringResumeMap = new HashMap<>();
+
+        stringResumeMap.put(UUID_1, RESUME_1);
+        stringResumeMap.put(UUID_2, RESUME_2);
+        stringResumeMap.put(UUID_3, RESUME_3);
+        stringResumeMap.put(UUID_4, RESUME_4);
+
+        //bad idea
+        for (String uuid : stringResumeMap.keySet()) {
+            System.out.println(stringResumeMap.get(uuid));
+        }
+
+        //good idea
+        for (Map.Entry<String, Resume> entry : stringResumeMap.entrySet()) {
+            System.out.println(entry.getValue());
+        }
+
+
+        System.out.println(stringResumeMap.toString());
     }
+
+
+
 }
