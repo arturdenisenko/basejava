@@ -2,27 +2,25 @@ package com.denart.webapp.storage;
 
 import com.denart.webapp.exception.ExistStorageException;
 import com.denart.webapp.exception.NotExistStorageException;
-import com.denart.webapp.exception.StorageException;
 import com.denart.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.denart.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
 
-    private final Storage storage;
+    protected final Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    protected static final String UUID_1 = "uuid1";
+    protected static final String UUID_2 = "uuid2";
+    protected static final String UUID_3 = "uuid3";
+    protected static final String UUID_4 = "uuid4";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    protected static final Resume RESUME_1 = new Resume(UUID_1);
+    protected static final Resume RESUME_2 = new Resume(UUID_2);
+    protected static final Resume RESUME_3 = new Resume(UUID_3);
+    protected static final Resume RESUME_4 = new Resume(UUID_4);
 
     private static final Resume[] RESUMES_EQUIVALENT_LIST = {RESUME_1, RESUME_2, RESUME_3};
 
@@ -60,17 +58,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_1);
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        try {
-            for (int i = 0; i < (STORAGE_LIMIT - 3); i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            fail("Storage overflow occurred prematurely");
-        }
-        storage.save(new Resume());
-    }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
