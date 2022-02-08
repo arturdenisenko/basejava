@@ -41,7 +41,6 @@ public class MapStorage extends AbstractStorage {
         } else {
             throw new NotExistStorageException(r.getUuid());
         }
-
     }
 
     @Override
