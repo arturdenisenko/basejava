@@ -1,69 +1,51 @@
 package com.denart.webapp.storage;
 
-import com.denart.webapp.exception.ExistStorageException;
-import com.denart.webapp.exception.NotExistStorageException;
 import com.denart.webapp.model.Resume;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public class MapStorage extends AbstractStorage {
-    private final Map<String, Resume> storage = new TreeMap<>();
+    private final Map<String, Resume> mapStorage = new TreeMap<>();
 
     @Override
-    protected void doSave(Resume r) {
-        if (getIndex(r.getUuid()) < 0) {
-            storage.put(r.getUuid(), r);
-        } else {
-            throw new ExistStorageException(r.getUuid());
-        }
+    protected void doSave(Resume r, int index) {
+        mapStorage.put(r.getUuid(), r);
     }
 
     @Override
     protected void doClear() {
-        storage.clear();
+        mapStorage.clear();
     }
 
     @Override
-    protected Resume doGet(String uuid) {
-        if (getIndex(uuid) > 0) {
-            return storage.get(uuid);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    protected Resume doGet(String uuid, int index) {
+        return mapStorage.get(uuid);
     }
 
 
     @Override
-    protected void doUpdate(Resume r) {
-        if (getIndex(r.getUuid()) > 0) {
-            storage.put(r.getUuid(), r);
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
+    protected void doUpdate(Resume r, int index) {
+        mapStorage.put(r.getUuid(), r);
     }
 
     @Override
-    protected void doDelete(String uuid) {
-        if (getIndex(uuid) > 0) {
-            storage.remove(uuid);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    protected void doDelete(String uuid, int index) {
+        mapStorage.remove(uuid);
     }
 
     @Override
     protected Resume[] doGetAllResumes() {
-        return storage.values().toArray(new Resume[0]);
+        return mapStorage.values().toArray(new Resume[0]);
     }
 
     @Override
     protected int getStorageSize() {
-        return storage.size();
+        return mapStorage.size();
     }
 
     @Override
     protected int getIndex(String uuid) {
-        return storage.containsKey(uuid) ? 1 : -1;
+        return mapStorage.containsKey(uuid) ? 1 : -1;
     }
 }

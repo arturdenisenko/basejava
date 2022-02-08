@@ -1,5 +1,7 @@
 package com.denart.webapp.storage;
 
+import com.denart.webapp.exception.ExistStorageException;
+import com.denart.webapp.exception.NotExistStorageException;
 import com.denart.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
@@ -11,22 +13,40 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        doSave(r);
+        int index = getIndex(r.getUuid());
+        if (index >= 0) {
+            throw new ExistStorageException(r.getUuid());
+        }
+        doSave(r, index);
     }
 
     @Override
     public Resume get(String uuid) {
-        return doGet(uuid);
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            return doGet(uuid, index);
+        }
+        throw new NotExistStorageException(uuid);
     }
 
     @Override
     public void update(Resume r) {
-        doUpdate(r);
+        int index = getIndex(r.getUuid());
+        if (index >= 0) {
+            doUpdate(r, index);
+        } else {
+            throw new NotExistStorageException(r.getUuid());
+        }
     }
 
     @Override
     public void delete(String uuid) {
-        doDelete(uuid);
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            doDelete(uuid, index);
+        } else {
+            throw new NotExistStorageException(uuid);
+        }
     }
 
     @Override
@@ -39,13 +59,20 @@ public abstract class AbstractStorage implements Storage {
         return getStorageSize();
     }
 
-    protected abstract void doSave(Resume r);
+    protected abstract void doSave(Resume r, int index);
+
     protected abstract void doClear();
-    protected abstract Resume doGet(String uuid);
-    protected abstract void doUpdate(Resume r);
-    protected abstract void doDelete(String uuid);
+
+    protected abstract Resume doGet(String uuid, int index);
+
+    protected abstract void doUpdate(Resume r, int index);
+
+    protected abstract void doDelete(String uuid, int index);
+
     protected abstract Resume[] doGetAllResumes();
+
     protected abstract int getStorageSize();
+
     protected abstract int getIndex(String uuid);
 
 }

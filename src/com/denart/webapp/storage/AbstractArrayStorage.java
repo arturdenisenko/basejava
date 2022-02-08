@@ -1,7 +1,5 @@
 package com.denart.webapp.storage;
 
-import com.denart.webapp.exception.ExistStorageException;
-import com.denart.webapp.exception.NotExistStorageException;
 import com.denart.webapp.exception.StorageException;
 import com.denart.webapp.model.Resume;
 
@@ -13,17 +11,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    protected void doSave(Resume r) {
-        if (size < STORAGE_LIMIT) {
-            int index = getIndex(r.getUuid());
-            if (index < 0) {
-                insertElement(r, index);
-                size++;
-            } else {
-                throw new ExistStorageException(r.getUuid());
-            }
+    protected void doSave(Resume r, int index) {
+        if (size == STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
-            throw new StorageException("Storage overflow " + r.getUuid());
+            insertElement(r, index);
+            size++;
         }
     }
 
@@ -34,34 +27,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
+    protected Resume doGet(String uuid, int index) {
+        return storage[index];
     }
 
     @Override
-    protected void doUpdate(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            storage[index] = r;
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
+    protected void doUpdate(Resume r, int index) {
+        storage[index] = r;
     }
 
     @Override
-    protected void doDelete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            fillDeletedElement(index);
-            storage[size - 1] = null;
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    protected void doDelete(String uuid, int index) {
+        fillDeletedElement(index);
+        storage[size - 1] = null;
+        size--;
     }
 
     /**
