@@ -38,12 +38,11 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private void resumeNotExistInStorage(String uuid) {
-        int index = (int)getIndex(uuid);
+        int index = (int) getIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
     }
-
 
     public abstract void clear();
 
