@@ -8,47 +8,42 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        if (resumeExistInStorage(r)){
-            doSave(r, index);
-        }
-
+        resumeExistInStorage(r.getUuid());
+        doSave(r);
     }
 
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return doGet(uuid, index);
-        }
-        throw new NotExistStorageException(uuid);
+        resumeNotExistInStorage(uuid);
+        return doGet(uuid);
     }
 
     @Override
     public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            doUpdate(r, index);
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
+        resumeNotExistInStorage(r.getUuid());
+        doUpdate(r);
     }
 
     @Override
     public void delete(String uuid) {
+        resumeNotExistInStorage(uuid);
+        doDelete(uuid);
+    }
+
+    private void resumeExistInStorage(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
-            doDelete(uuid, index);
-        } else {
+            throw new ExistStorageException(uuid);
+        }
+    }
+
+    private void resumeNotExistInStorage(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
     }
 
-    private Object resumeExistInStorage(Object r) {
-        int index = getIndex( r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
-    }
 
     public abstract void clear();
 
@@ -56,14 +51,14 @@ public abstract class AbstractStorage implements Storage {
 
     public abstract int size();
 
-    protected abstract void doSave(Resume r, int index);
+    protected abstract void doSave(Resume r);
 
-    protected abstract Resume doGet(String uuid, int index);
+    protected abstract Resume doGet(String uuid);
 
-    protected abstract void doUpdate(Resume r, int index);
+    protected abstract void doUpdate(Resume r);
 
-    protected abstract void doDelete(String uuid, int index);
+    protected abstract void doDelete(String uuid);
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Integer getIndex(String uuid);
 
 }

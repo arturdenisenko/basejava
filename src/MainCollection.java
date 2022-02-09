@@ -63,6 +63,16 @@ public class MainCollection {
 
 
         System.out.println(stringResumeMap.toString());
+
+        System.out.println("Arraylist");
+        List<Resume> resumeList = new ArrayList<>();
+        resumeList.add(RESUME_1);
+        resumeList.add(RESUME_2);
+        resumeList.add(RESUME_3);
+        System.out.println(resumeList);
+        resumeList.remove(new Integer(0));
+        System.out.println(resumeList);
+
     }
 
 
