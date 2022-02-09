@@ -7,17 +7,11 @@ import com.denart.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     @Override
-    public void clear() {
-        doClear();
-    }
-
-    @Override
     public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
+        if (resumeExistInStorage(r)){
+            doSave(r, index);
         }
-        doSave(r, index);
+
     }
 
     @Override
@@ -49,29 +43,29 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    @Override
-    public Resume[] getAll() {
-        return doGetAllResumes();
+    private Object resumeExistInStorage(Object r) {
+        int index = getIndex( r.getUuid());
+        if (index >= 0) {
+            throw new ExistStorageException(r.getUuid());
+        }
     }
 
-    @Override
-    public int size() {
-        return getStorageSize();
-    }
+
+
+
+    public abstract void clear();
+
+    public abstract Resume[] getAll();
+
+    public abstract int size();
 
     protected abstract void doSave(Resume r, int index);
-
-    protected abstract void doClear();
 
     protected abstract Resume doGet(String uuid, int index);
 
     protected abstract void doUpdate(Resume r, int index);
 
     protected abstract void doDelete(String uuid, int index);
-
-    protected abstract Resume[] doGetAllResumes();
-
-    protected abstract int getStorageSize();
 
     protected abstract int getIndex(String uuid);
 

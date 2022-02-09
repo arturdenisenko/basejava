@@ -14,7 +14,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doClear() {
+    public void clear() {
         listStorage.clear();
     }
 
@@ -34,12 +34,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume[] doGetAllResumes() {
+    public Resume[] getAll() {
         return  listStorage.toArray(Resume[]::new);
     }
 
     @Override
-    protected int getStorageSize() {
+    public int size() {
         return listStorage.size();
     }
 
