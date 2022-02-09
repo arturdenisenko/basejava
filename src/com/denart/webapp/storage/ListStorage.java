@@ -20,12 +20,12 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected Resume doGet(String uuid) {
-        return listStorage.get(getIndex(uuid));
+        return listStorage.get((int) getIndex(uuid));
     }
 
     @Override
     protected void doUpdate(Resume r) {
-        listStorage.set(getIndex(r.getUuid()), r);
+        listStorage.set((int) getIndex(r.getUuid()), r);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Integer getIndex(String uuid) {
+    protected Object getIndex(String uuid) {
         for (int i = 0; i < listStorage.size(); i++) {
             if (uuid.equals(listStorage.get(i).getUuid())) {
                 return i;

@@ -31,14 +31,14 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private void resumeExistInStorage(String uuid) {
-        int index = getIndex(uuid);
+        int index = (int) getIndex(uuid);
         if (index >= 0) {
             throw new ExistStorageException(uuid);
         }
     }
 
     private void resumeNotExistInStorage(String uuid) {
-        int index = getIndex(uuid);
+        int index = (int)getIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
@@ -59,6 +59,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDelete(String uuid);
 
-    protected abstract Integer getIndex(String uuid);
+    protected abstract Object getIndex(String uuid);
 
 }
