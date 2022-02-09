@@ -50,9 +50,6 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-
-
-
     public abstract void clear();
 
     public abstract Resume[] getAll();
