@@ -46,12 +46,6 @@ public abstract class AbstractStorage implements Storage {
         return index;
     }
 
-    public abstract void clear();
-
-    public abstract Resume[] getAll();
-
-    public abstract int size();
-
     protected abstract void doSave(Resume r, Object index);
 
     protected abstract Resume doGet(String uuid, Object index);
