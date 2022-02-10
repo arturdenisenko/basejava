@@ -61,7 +61,6 @@ public class MainCollection {
             System.out.println(entry.getValue());
         }
 
-
         System.out.println(stringResumeMap.toString());
 
         System.out.println("Arraylist");
@@ -70,9 +69,9 @@ public class MainCollection {
         resumeList.add(RESUME_2);
         resumeList.add(RESUME_3);
         System.out.println(resumeList);
-        resumeList.remove(new Integer(0));
+        //bad idea
+        resumeList.remove(Integer.valueOf(0));
         System.out.println(resumeList);
-
     }
 
 
