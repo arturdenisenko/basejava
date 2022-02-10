@@ -30,7 +30,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doDelete(String uuid, Object Index) {
+    protected void doDelete(String uuid, Object index) {
         mapStorage.remove(uuid);
     }
 
