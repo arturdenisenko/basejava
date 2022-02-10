@@ -73,7 +73,4 @@ public class MainCollection {
         resumeList.remove(Integer.valueOf(0));
         System.out.println(resumeList);
     }
-
-
-
 }
