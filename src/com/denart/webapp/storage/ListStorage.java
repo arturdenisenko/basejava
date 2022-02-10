@@ -9,7 +9,7 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected void doSave(Resume r) {
+    protected void doSave(Resume r, Object index) {
         listStorage.add(r);
     }
 
@@ -19,18 +19,18 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(String uuid) {
-        return listStorage.get((int) getIndex(uuid));
+    protected Resume doGet(String uuid, Object index) {
+        return listStorage.get((int) index);
     }
 
     @Override
-    protected void doUpdate(Resume r) {
-        listStorage.set((int) getIndex(r.getUuid()), r);
+    protected void doUpdate(Resume r, Object index) {
+        listStorage.set((int) index, r);
     }
 
     @Override
-    protected void doDelete(String uuid) {
-        listStorage.remove((int)(getIndex(uuid)));
+    protected void doDelete(String uuid, Object index) {
+        listStorage.remove((int) index);
     }
 
     @Override

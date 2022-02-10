@@ -8,40 +8,42 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        resumeExistInStorage(r.getUuid());
-        doSave(r);
+        Object index = resumeExistInStorage(r.getUuid());
+        doSave(r, index);
     }
 
     @Override
     public Resume get(String uuid) {
-        resumeNotExistInStorage(uuid);
-        return doGet(uuid);
+        Object index = resumeNotExistInStorage(uuid);
+        return doGet(uuid, index);
     }
 
     @Override
     public void update(Resume r) {
-        resumeNotExistInStorage(r.getUuid());
-        doUpdate(r);
+        Object index = resumeNotExistInStorage(r.getUuid());
+        doUpdate(r, index);
     }
 
     @Override
     public void delete(String uuid) {
-        resumeNotExistInStorage(uuid);
-        doDelete(uuid);
+        Object index = resumeNotExistInStorage(uuid);
+        doDelete(uuid, index);
     }
 
-    private void resumeExistInStorage(String uuid) {
+    private Object resumeExistInStorage(String uuid) {
         int index = (int) getIndex(uuid);
         if (index >= 0) {
             throw new ExistStorageException(uuid);
         }
+        return index;
     }
 
-    private void resumeNotExistInStorage(String uuid) {
+    private Object resumeNotExistInStorage(String uuid) {
         int index = (int) getIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
+        return index;
     }
 
     public abstract void clear();
@@ -50,13 +52,13 @@ public abstract class AbstractStorage implements Storage {
 
     public abstract int size();
 
-    protected abstract void doSave(Resume r);
+    protected abstract void doSave(Resume r, Object index);
 
-    protected abstract Resume doGet(String uuid);
+    protected abstract Resume doGet(String uuid, Object index);
 
-    protected abstract void doUpdate(Resume r);
+    protected abstract void doUpdate(Resume r, Object index);
 
-    protected abstract void doDelete(String uuid);
+    protected abstract void doDelete(String uuid, Object Index);
 
     protected abstract Object getIndex(String uuid);
 

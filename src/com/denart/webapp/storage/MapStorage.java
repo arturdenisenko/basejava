@@ -9,7 +9,7 @@ public class MapStorage extends AbstractStorage {
     private final Map<String, Resume> mapStorage = new TreeMap<>();
 
     @Override
-    protected void doSave(Resume r) {
+    protected void doSave(Resume r, Object index) {
         mapStorage.put(r.getUuid(), r);
     }
 
@@ -19,18 +19,18 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(String uuid) {
+    protected Resume doGet(String uuid, Object index) {
         return mapStorage.get(uuid);
     }
 
 
     @Override
-    protected void doUpdate(Resume r) {
+    protected void doUpdate(Resume r, Object index) {
         mapStorage.put(r.getUuid(), r);
     }
 
     @Override
-    protected void doDelete(String uuid) {
+    protected void doDelete(String uuid, Object Index) {
         mapStorage.remove(uuid);
     }
 
