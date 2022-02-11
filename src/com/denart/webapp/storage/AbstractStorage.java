@@ -55,5 +55,4 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void doDelete(Object uuid, Object searchKey);
 
     protected abstract Object getSearchKey(String uuid);
-
 }
