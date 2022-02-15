@@ -109,7 +109,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
+    public void getAllSorted() {
         List<Resume> actualResumes = storage.getAllSorted();
         assertEquals(RESUMES_EQUIVALENT_LIST, actualResumes);
     }

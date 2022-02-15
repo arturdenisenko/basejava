@@ -5,6 +5,7 @@ import com.denart.webapp.model.Resume;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MapResumeStorage extends AbstractStorage {
 
@@ -12,7 +13,9 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        resumeMap.put(r, r);
+        if (searchKey == null) {
+            resumeMap.put(r, r);
+        }
     }
 
     @Override
@@ -31,8 +34,8 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String resume) {
-        return resumeMap.get(resume);
+    protected Object getSearchKey(String uuid) {
+        return resumeMap.get(new Resume(uuid));
     }
 
     @Override
@@ -47,7 +50,7 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return null;
+        return resumeMap.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
     @Override
