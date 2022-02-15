@@ -1,13 +1,12 @@
 package com.denart.webapp.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Initial resume class
  */
-public class Resume implements Comparator<Resume> {
+public class Resume {
 
     // Unique identifier
     private final String uuid;
@@ -56,7 +55,7 @@ public class Resume implements Comparator<Resume> {
                 '}';
     }
 
-    @Override
+    /*@Override
     public int compare(Resume o1, Resume o2) {
         int result = o1.getFullName().compareTo(o2.getFullName());
         if (result == 0) {
@@ -65,5 +64,5 @@ public class Resume implements Comparator<Resume> {
             return result;
         }
     }
-
+*/
 }

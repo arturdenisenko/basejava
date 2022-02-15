@@ -5,6 +5,7 @@ import com.denart.webapp.model.Resume;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10_000;
@@ -49,7 +50,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      */
     @Override
     public List<Resume> getAllSorted() {
-        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
+        // Arrays.asList(Arrays.copyOfRange(storage, 0, size));
+        return Arrays.stream(storage).sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
     @Override

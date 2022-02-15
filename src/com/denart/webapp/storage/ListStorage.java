@@ -4,6 +4,7 @@ import com.denart.webapp.model.Resume;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListStorage extends AbstractStorage {
     private final List<Resume> listStorage = new ArrayList<>();
@@ -34,7 +35,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return listStorage;
+        return listStorage.stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
     @Override

@@ -4,7 +4,11 @@ import com.denart.webapp.exception.ExistStorageException;
 import com.denart.webapp.exception.NotExistStorageException;
 import com.denart.webapp.model.Resume;
 
+import java.util.Comparator;
+
 public abstract class AbstractStorage implements Storage {
+
+    protected final static Comparator<Resume> RESUME_WITH_FULL_NAME_COMPARATOR = new resumeComparator();
 
     protected abstract void doSave(Resume r, Object searchKey);
 
@@ -58,4 +62,12 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
+    protected static class resumeComparator implements Comparator<Resume> {
+        @Override
+        public int compare(Resume o1, Resume o2) {
+            return Comparator.comparing(Resume::getFullName)
+                    .thenComparing(Resume::getUuid)
+                    .compare(o1, o2);
+        }
+    }
 }
