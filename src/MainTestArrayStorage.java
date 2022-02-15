@@ -10,25 +10,34 @@ public class MainTestArrayStorage {
 
     public static void main(String[] args) {
 
-        final Resume r2 = new Resume("uuid2", fullName);
-        final Resume r3 = new Resume("uuid3", fullName);
-        final Resume r1 = new Resume("uuid1", fullName);
-        final Resume r5 = new Resume("uuid5", fullName);
-        final Resume r4 = new Resume("uuid4", fullName);
+        final String UUID_1 = "uuid1";
+        final String UUID_2 = "uuid2";
+        final String UUID_3 = "uuid3";
+        final String UUID_4 = "uuid4";
 
-        ARRAY_STORAGE.save(r4);
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
-        ARRAY_STORAGE.save(r5);
+        final String FULL_NAME_1 = "IVANOV SERGEI";
+        final String FULL_NAME_2 = "PETROV NIKOLAI";
+        final String FULL_NAME_3 = "VOSTRECOV PETR";
+        final String FULL_NAME_4 = "POLINSKII ILYA";
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
+        final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
+        final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
+        final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
+        final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+
+        ARRAY_STORAGE.save(RESUME_4);
+        ARRAY_STORAGE.save(RESUME_2);
+        ARRAY_STORAGE.save(RESUME_3);
+        ARRAY_STORAGE.save(RESUME_1);
+
+
+        System.out.println("Get r1: " + ARRAY_STORAGE.get(RESUME_1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         printAll();
-        ARRAY_STORAGE.delete(r3.getUuid());
+        ARRAY_STORAGE.delete(RESUME_3.getUuid());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
@@ -38,7 +47,7 @@ public class MainTestArrayStorage {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

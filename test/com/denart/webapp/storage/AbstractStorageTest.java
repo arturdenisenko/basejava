@@ -6,7 +6,11 @@ import com.denart.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
 
@@ -17,12 +21,24 @@ public abstract class AbstractStorageTest {
     protected static final String UUID_3 = "uuid3";
     protected static final String UUID_4 = "uuid4";
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1, fullName);
-    protected static final Resume RESUME_2 = new Resume(UUID_2, fullName);
-    protected static final Resume RESUME_3 = new Resume(UUID_3, fullName);
-    protected static final Resume RESUME_4 = new Resume(UUID_4, fullName);
+    protected static final String FULL_NAME_1 = "IVANOV SERGEI";
+    protected static final String FULL_NAME_2 = "PETROV NIKOLAI";
+    protected static final String FULL_NAME_3 = "VOSTRECOV PETR";
+    protected static final String FULL_NAME_4 = "POLINSKII ILYA";
+    protected static final String DUMMY_FULL_NAME = "DUMMY";
 
-    private static final Resume[] RESUMES_EQUIVALENT_LIST = {RESUME_1, RESUME_2, RESUME_3};
+    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
+    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+
+    private static final List<Resume> RESUMES_EQUIVALENT_LIST = new ArrayList<>();
+
+    {
+        RESUMES_EQUIVALENT_LIST.add(RESUME_1);
+        RESUMES_EQUIVALENT_LIST.add(RESUME_2);
+        RESUMES_EQUIVALENT_LIST.add(RESUME_3);
+    }
 
     protected AbstractStorageTest(AbstractStorage storage) {
         this.storage = storage;
@@ -73,7 +89,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume testResume = new Resume(UUID_3, fullName);
+        Resume testResume = new Resume(UUID_3, FULL_NAME_3);
         storage.update(testResume);
         assertSame(testResume, storage.get(UUID_3));
     }
@@ -91,8 +107,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] actualResumes = storage.getAll();
-        assertArrayEquals(RESUMES_EQUIVALENT_LIST, actualResumes);
+        List<Resume> actualResumes = storage.getAllSorted();
+        assertEquals(RESUMES_EQUIVALENT_LIST, actualResumes);
     }
 
     @Test

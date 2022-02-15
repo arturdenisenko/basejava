@@ -24,9 +24,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[insertIndex] = r;
     }
 
+    //TODO something with that? need to fix gSK?
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid, fullName);
+        Resume searchKey = new Resume(uuid, "fullName");
         return Arrays.binarySearch(storage, 0, size, searchKey, RESUME_COMPARATOR);
     }
 
