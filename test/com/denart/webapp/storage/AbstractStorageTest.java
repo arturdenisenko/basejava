@@ -36,7 +36,7 @@ public abstract class AbstractStorageTest {
     private static final List<Resume> RESUMES_EQUIVALENT_LIST = new ArrayList<>();
     private static final Comparator<Resume> resumeComparator = new resumeComparator();
 
-    {
+    static {
         RESUMES_EQUIVALENT_LIST.add(RESUME_1);
         RESUMES_EQUIVALENT_LIST.add(RESUME_2);
         RESUMES_EQUIVALENT_LIST.add(RESUME_3);
