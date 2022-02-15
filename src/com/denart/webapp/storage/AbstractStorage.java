@@ -6,53 +6,56 @@ import com.denart.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
+    protected abstract void doSave(Resume r, Object searchKey);
+
+    protected abstract Resume doGet(Object searchKey);
+
+    protected abstract void doUpdate(Resume r, Object searchKey);
+
+    protected abstract void doDelete(Object searchKey);
+
+    protected abstract Object getSearchKey(String uuid);
+
+    protected abstract Boolean isExists(Object searchKey);
+
     @Override
     public void save(Resume r) {
-        Object index = existInStorage(r.getUuid());
-        doSave(r, index);
+        Object searchKey = existInStorage(r.getUuid());
+        doSave(r, searchKey);
     }
 
     @Override
     public Resume get(String uuid) {
-        Object index = notExistInStorage(uuid);
-        return doGet(uuid, index);
+        Object searchKey = notExistInStorage(uuid);
+        return doGet(searchKey);
     }
 
     @Override
     public void update(Resume r) {
-        Object index = notExistInStorage(r.getUuid());
-        doUpdate(r, index);
+        Object searchKey = notExistInStorage(r.getUuid());
+        doUpdate(r, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
-        Object index = notExistInStorage(uuid);
-        doDelete(uuid, index);
+        Object searchKey = notExistInStorage(uuid);
+        doDelete(searchKey);
     }
 
     private Object existInStorage(String uuid) {
-        int index = (int) getSearchKey(uuid);
-        if (index >= 0) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExists(searchKey)) {
             throw new ExistStorageException(uuid);
         }
-        return index;
+        return searchKey;
     }
 
     private Object notExistInStorage(String uuid) {
-        int index = (int) getSearchKey(uuid);
-        if (index < 0) {
+        Object searchKey = getSearchKey(uuid);
+        if (!isExists(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
-        return index;
+        return searchKey;
     }
 
-    protected abstract void doSave(Resume r, Object searchKey);
-
-    protected abstract Resume doGet(Object uuid, Object searchKey);
-
-    protected abstract void doUpdate(Resume r, Object searchKey);
-
-    protected abstract void doDelete(Object uuid, Object searchKey);
-
-    protected abstract Object getSearchKey(String uuid);
 }
