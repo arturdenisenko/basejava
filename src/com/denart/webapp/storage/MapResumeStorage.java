@@ -68,7 +68,6 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     private Integer getKey(Optional<Integer> searchKey) {
-        Optional<Integer> result = searchKey;
-        return result.get();
+        return searchKey.orElse(null);
     }
 }
