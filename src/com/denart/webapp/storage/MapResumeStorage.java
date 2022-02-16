@@ -9,13 +9,12 @@ import java.util.stream.Collectors;
 
 public class MapResumeStorage extends AbstractStorage {
 
-    Map<Resume, Resume> resumeMap = new HashMap<>();
+    Map<Integer, Resume> resumeMap = new HashMap<>();
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        if (searchKey == null) {
-            resumeMap.put(r, r);
-        }
+        Integer hashCode = r.hashCode();
+        resumeMap.put(hashCode, r);
     }
 
     @Override
@@ -35,8 +34,13 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        return resumeMap.get(new Resume(uuid));
+        return resumeMap.entrySet()
+                .stream()
+                .filter(entry -> uuid.equals(entry.getValue().getUuid()))
+                .map(Map.Entry::getKey)
+                .findFirst();
     }
+
 
     @Override
     protected Boolean isExists(Object searchKey) {
