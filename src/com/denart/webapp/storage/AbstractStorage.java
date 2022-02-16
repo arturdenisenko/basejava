@@ -62,7 +62,7 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
-    protected static class resumeComparator implements Comparator<Resume> {
+    private static class resumeComparator implements Comparator<Resume> {
         @Override
         public int compare(Resume o1, Resume o2) {
             return Comparator.comparing(Resume::getFullName)
