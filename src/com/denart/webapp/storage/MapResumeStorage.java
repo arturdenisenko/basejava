@@ -13,7 +13,6 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        //Objects.requireNonNull(searchKey);
         resumeResumeMap.put(r, r);
     }
 
