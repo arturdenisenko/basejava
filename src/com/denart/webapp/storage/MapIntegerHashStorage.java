@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MapResumeStorage extends AbstractStorage {
+public class MapIntegerHashStorage extends AbstractStorage {
 
     Map<Integer, Resume> resumeMap = new HashMap<>();
 
@@ -20,14 +20,12 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Resume doGet(Object searchKey) {
-        Integer key = getValueFromOptional((Optional<Integer>) searchKey);
-        return resumeMap.get(key);
+        return resumeMap.get(getValueFromOptional((Optional<Integer>) searchKey));
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        Integer key = getValueFromOptional((Optional<Integer>) searchKey);
-        resumeMap.put(key, r);
+        resumeMap.put(getValueFromOptional((Optional<Integer>) searchKey), r);
     }
 
     @Override
