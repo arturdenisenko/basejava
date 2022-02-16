@@ -12,6 +12,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    protected abstract void fillDeletedElement(Integer index);
+
+    protected abstract void insertElement(Resume r, Integer index);
+
+    protected abstract Object getSearchKey(String uuid);
+
     @Override
     protected void doSave(Resume r, Object searchKey) {
         if (size == STORAGE_LIMIT) {
@@ -59,12 +65,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public int size() {
         return size;
     }
-
-    protected abstract void fillDeletedElement(Integer index);
-
-    protected abstract void insertElement(Resume r, Integer index);
-
-    protected abstract Object getSearchKey(String uuid);
 
     @Override
     protected Boolean isExists(Object searchKey) {
