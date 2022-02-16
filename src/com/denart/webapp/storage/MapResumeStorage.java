@@ -20,34 +20,36 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return resumeMap.get((Integer.valueOf((Integer) searchKey)));
+        Integer key = getKey((Optional<Integer>) searchKey);
+        return resumeMap.get(key);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        resumeMap.put((Integer)searchKey, r);
+        Integer key = getKey((Optional<Integer>) searchKey);
+        resumeMap.put(key, r);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        resumeMap.remove(searchKey);
+        Integer key = getKey((Optional<Integer>) searchKey);
+        resumeMap.remove(key);
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        Optional<Integer> first = resumeMap.entrySet()
+        return resumeMap.entrySet()
                 .stream()
                 .filter(entry -> uuid.equals(entry.getValue().getUuid()))
                 .map(Map.Entry::getKey)
                 .findFirst();
-        return first;
     }
 
 
     @Override
     protected Boolean isExists(Object searchKey) {
         Optional<Integer> sk = (Optional<Integer>) searchKey;
-        return !sk.isEmpty();
+        return sk.isPresent();
     }
 
     @Override
@@ -63,5 +65,10 @@ public class MapResumeStorage extends AbstractStorage {
     @Override
     public int size() {
         return resumeMap.size();
+    }
+
+    private Integer getKey(Optional<Integer> searchKey) {
+        Optional<Integer> result = searchKey;
+        return result.get();
     }
 }
