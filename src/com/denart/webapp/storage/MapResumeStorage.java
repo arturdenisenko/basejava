@@ -9,39 +9,39 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MapResumeStorage extends AbstractStorage {
-    Map<Resume, Resume> resumeResumeMap = new HashMap<>();
+    private final Map<Resume, Resume> storageMap = new HashMap<>();
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        resumeResumeMap.put(r, r);
+        storageMap.put(r, r);
     }
 
     @Override
     protected List<Resume> getSortedCollection() {
-        return resumeResumeMap.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
+        return storageMap.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
         Objects.requireNonNull(searchKey);
-        return resumeResumeMap.get((Resume) searchKey);
+        return (Resume) searchKey;
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
         Objects.requireNonNull(searchKey);
-        resumeResumeMap.put((Resume) searchKey, r);
+        storageMap.put((Resume) searchKey, r);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
         Objects.requireNonNull(searchKey);
-        resumeResumeMap.remove(searchKey);
+        storageMap.remove(searchKey);
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        List<Resume> resumeStream = resumeResumeMap.entrySet()
+        List<Resume> resumeStream = storageMap.entrySet()
                 .stream()
                 .filter(entry -> uuid.equals(entry.getKey()
                         .getUuid())).map(Map.Entry::getValue).collect(Collectors.toList());
@@ -53,16 +53,16 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected boolean isExists(Object searchKey) {
-        return resumeResumeMap.containsKey(searchKey);
+        return storageMap.containsKey(searchKey);
     }
 
     @Override
     public void clear() {
-        resumeResumeMap.clear();
+        storageMap.clear();
     }
 
     @Override
     public int size() {
-        return resumeResumeMap.size();
+        return storageMap.size();
     }
 }

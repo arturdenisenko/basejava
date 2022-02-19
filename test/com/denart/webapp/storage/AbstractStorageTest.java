@@ -108,8 +108,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAllSorted()
-    {
+    public void getAllSorted() {
         RESUMES_EQUIVALENT_LIST.sort(RESUME_WITH_FULL_NAME_COMPARATOR);
         List<Resume> actualResumes = storage.getAllSorted();
         assertEquals(RESUMES_EQUIVALENT_LIST, actualResumes);
