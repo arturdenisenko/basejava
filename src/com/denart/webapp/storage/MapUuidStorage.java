@@ -37,11 +37,6 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        return mapStorage.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
-    }
-
-    @Override
     public int size() {
         return mapStorage.size();
     }
@@ -54,5 +49,10 @@ public class MapUuidStorage extends AbstractStorage {
     @Override
     protected boolean isExists(Object searchKey) {
         return mapStorage.containsKey(searchKey);
+    }
+
+    @Override
+    protected List<Resume> getSortedCollection() {
+        return mapStorage.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
     }
 }

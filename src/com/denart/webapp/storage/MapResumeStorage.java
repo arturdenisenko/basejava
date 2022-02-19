@@ -17,6 +17,11 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
+    protected List<Resume> getSortedCollection() {
+        return resumeResumeMap.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
+    }
+
+    @Override
     protected Resume doGet(Object searchKey) {
         Objects.requireNonNull(searchKey);
         return resumeResumeMap.get((Resume) searchKey);
@@ -54,11 +59,6 @@ public class MapResumeStorage extends AbstractStorage {
     @Override
     public void clear() {
         resumeResumeMap.clear();
-    }
-
-    @Override
-    public List<Resume> getAllSorted() {
-        return resumeResumeMap.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
     @Override

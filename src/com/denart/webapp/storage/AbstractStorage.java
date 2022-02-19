@@ -5,6 +5,7 @@ import com.denart.webapp.exception.NotExistStorageException;
 import com.denart.webapp.model.Resume;
 
 import java.util.Comparator;
+import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
 
@@ -25,6 +26,13 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Object getSearchKey(String uuid);
 
     protected abstract boolean isExists(Object searchKey);
+
+    protected abstract List<Resume> getSortedCollection();
+
+    @Override
+    public List<Resume> getAllSorted() {
+        return getSortedCollection();
+    }
 
     @Override
     public void save(Resume r) {
