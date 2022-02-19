@@ -45,7 +45,7 @@ public class MapIntegerHashStorage extends AbstractStorage {
 
 
     @Override
-    protected Boolean isExists(Object searchKey) {
+    protected boolean isExists(Object searchKey) {
         Optional<Integer> sk = (Optional<Integer>) searchKey;
         return sk.isPresent();
     }

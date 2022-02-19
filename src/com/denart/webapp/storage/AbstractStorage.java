@@ -8,7 +8,11 @@ import java.util.Comparator;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected final static Comparator<Resume> RESUME_WITH_FULL_NAME_COMPARATOR = new resumeComparator();
+    public final static Comparator<Resume> RESUME_WITH_FULL_NAME_COMPARATOR;
+
+    static {
+        RESUME_WITH_FULL_NAME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
+    }
 
     protected abstract void doSave(Resume r, Object searchKey);
 
@@ -20,33 +24,33 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
 
-    protected abstract Boolean isExists(Object searchKey);
+    protected abstract boolean isExists(Object searchKey);
 
     @Override
     public void save(Resume r) {
-        Object searchKey = existInStorage(r.getUuid());
+        Object searchKey = getSearchKeyIfExist(r.getUuid());
         doSave(r, searchKey);
     }
 
     @Override
     public Resume get(String uuid) {
-        Object searchKey = notExistInStorage(uuid);
+        Object searchKey = getSearchKeyIfNotExist(uuid);
         return doGet(searchKey);
     }
 
     @Override
     public void update(Resume r) {
-        Object searchKey = notExistInStorage(r.getUuid());
+        Object searchKey = getSearchKeyIfNotExist(r.getUuid());
         doUpdate(r, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
-        Object searchKey = notExistInStorage(uuid);
+        Object searchKey = getSearchKeyIfNotExist(uuid);
         doDelete(searchKey);
     }
 
-    private Object existInStorage(String uuid) {
+    private Object getSearchKeyIfExist(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (isExists(searchKey)) {
             throw new ExistStorageException(uuid);
@@ -54,20 +58,11 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
-    private Object notExistInStorage(String uuid) {
+    private Object getSearchKeyIfNotExist(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (!isExists(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
-    }
-
-    private static class resumeComparator implements Comparator<Resume> {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return Comparator.comparing(Resume::getFullName)
-                    .thenComparing(Resume::getUuid)
-                    .compare(o1, o2);
-        }
     }
 }

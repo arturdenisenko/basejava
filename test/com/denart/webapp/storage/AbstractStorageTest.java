@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
+import static com.denart.webapp.storage.AbstractStorage.RESUME_WITH_FULL_NAME_COMPARATOR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -34,7 +34,7 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
 
     private static final List<Resume> RESUMES_EQUIVALENT_LIST = new ArrayList<>();
-    private static final Comparator<Resume> resumeComparator = new resumeComparator();
+
 
     static {
         RESUMES_EQUIVALENT_LIST.add(RESUME_1);
@@ -52,12 +52,11 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
-        RESUMES_EQUIVALENT_LIST.sort(resumeComparator);
     }
 
     @Test
     public void get() {
-        assertEquals(RESUME_1, storage.get(UUID_1));
+        assertGet(RESUME_1);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -109,7 +108,9 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAllSorted() {
+    public void getAllSorted()
+    {
+        RESUMES_EQUIVALENT_LIST.sort(RESUME_WITH_FULL_NAME_COMPARATOR);
         List<Resume> actualResumes = storage.getAllSorted();
         assertEquals(RESUMES_EQUIVALENT_LIST, actualResumes);
     }
@@ -126,14 +127,4 @@ public abstract class AbstractStorageTest {
     private void assertGet(Resume r) {
         assertEquals(r, storage.get(r.getUuid()));
     }
-
-    protected static class resumeComparator implements Comparator<Resume> {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return Comparator.comparing(Resume::getFullName)
-                    .thenComparing(Resume::getUuid)
-                    .compare(o1, o2);
-        }
-    }
-
 }
