@@ -39,7 +39,7 @@ public class MapResumeStorage extends AbstractStorage {
     protected Object getSearchKey(String uuid) {
         for (Map.Entry<Resume, Resume> resumeResumeEntry : storageMap.entrySet()) {
             if (uuid.equals(resumeResumeEntry.getKey().getUuid())) {
-                return resumeResumeEntry.getKey();
+                return resumeResumeEntry.getValue();
             }
         }
         return null;
