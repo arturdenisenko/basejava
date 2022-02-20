@@ -23,8 +23,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         storage[insertIndex] = r;
     }
-
-    //TODO something with that? need to fix gSK?
+    
     @Override
     protected Object getSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid, "fullName");
