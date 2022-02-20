@@ -12,9 +12,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected abstract void fillDeletedElement(Integer index);
+    protected abstract void fillDeletedElement(int index);
 
-    protected abstract void insertElement(Resume r, Integer index);
+    protected abstract void insertElement(Resume r, int index);
 
     protected abstract Object getSearchKey(String uuid);
 

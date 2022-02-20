@@ -8,12 +8,12 @@ import com.denart.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void fillDeletedElement(Integer index) {
+    protected void fillDeletedElement(int index) {
         storage[index] = storage[size - 1];
     }
 
     @Override
-    protected void insertElement(Resume r, Integer index) {
+    protected void insertElement(Resume r, int index) {
         storage[size] = r;
     }
 

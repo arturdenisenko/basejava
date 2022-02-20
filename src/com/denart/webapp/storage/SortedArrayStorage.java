@@ -10,7 +10,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     private final static Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
-    protected void fillDeletedElement(Integer index) {
+    protected void fillDeletedElement(int index) {
         int numMoved = size - index - 1;
         if (numMoved > 0) {
             System.arraycopy(storage, index + 1, storage, index, numMoved);
@@ -18,12 +18,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void insertElement(Resume r, Integer index) {
+    protected void insertElement(Resume r, int index) {
         int insertIndex = (index + 1) * -1;
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         storage[insertIndex] = r;
     }
-    
+
     @Override
     protected Object getSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid, "fullName");
