@@ -2,10 +2,10 @@ package com.denart.webapp.storage;
 
 import com.denart.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class MapUuidStorage extends AbstractStorage {
     private final Map<String, Resume> mapStorage = new TreeMap<>();
@@ -52,7 +52,7 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> getSortedCollection() {
-        return mapStorage.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
+    public List<Resume> getAllSorted() {
+        return getSortedCollection(new ArrayList<Resume>(mapStorage.values()));
     }
 }

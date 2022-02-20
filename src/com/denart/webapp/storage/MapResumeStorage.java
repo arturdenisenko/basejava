@@ -2,8 +2,10 @@ package com.denart.webapp.storage;
 
 import com.denart.webapp.model.Resume;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapResumeStorage extends AbstractStorage {
     private final Map<Resume, Resume> storageMap = new HashMap<>();
@@ -14,13 +16,12 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> getSortedCollection() {
-        return storageMap.values().stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
+    public List<Resume> getAllSorted() {
+        return getSortedCollection(new ArrayList<>(storageMap.values()));
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        Objects.requireNonNull(searchKey);
         return (Resume) searchKey;
     }
 
@@ -31,7 +32,6 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected void doDelete(Object searchKey) {
-        Objects.requireNonNull(searchKey);
         storageMap.remove(searchKey);
     }
 

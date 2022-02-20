@@ -51,10 +51,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> getSortedCollection() {
-        return Arrays.stream(Arrays.copyOfRange(storage, 0, size))
-                .sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
+    public List<Resume> getAllSorted() {
+        return getSortedCollection(Arrays.stream(Arrays.copyOfRange(storage, 0, size)).collect(Collectors.toList()));
     }
+
 
     @Override
     public int size() {
