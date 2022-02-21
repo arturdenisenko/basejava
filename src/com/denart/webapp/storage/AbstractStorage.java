@@ -23,7 +23,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean isExists(Object searchKey);
 
-    public abstract List<Resume> getListResumesFromStorage();
+    public abstract List<Resume> doGetResumesListFromStorage();
 
     @Override
     public void save(Resume r) {
@@ -51,7 +51,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        List<Resume> listFromStorage = getListResumesFromStorage();
+        List<Resume> listFromStorage = doGetResumesListFromStorage();
         listFromStorage.sort(RESUME_WITH_FULL_NAME_COMPARATOR);
         return listFromStorage;
     }
