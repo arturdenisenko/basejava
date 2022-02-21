@@ -2,10 +2,7 @@ package com.denart.webapp.storage;
 
 import com.denart.webapp.model.Resume;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapResumeStorage extends AbstractStorage {
     private final Map<Resume, Resume> storageMap = new HashMap<>();
@@ -37,9 +34,9 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        for (Map.Entry<Resume, Resume> resumeResumeEntry : storageMap.entrySet()) {
-            if (uuid.equals(resumeResumeEntry.getKey().getUuid())) {
-                return resumeResumeEntry.getValue();
+        for (Map.Entry<Resume, Resume> entry : storageMap.entrySet()) {
+            if (entry.getKey().getUuid().equals(uuid)) {
+                return storageMap.get(entry.getKey());
             }
         }
         return null;
