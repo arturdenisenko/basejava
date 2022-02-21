@@ -6,7 +6,6 @@ import com.denart.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractStorage implements Storage {
 
@@ -24,8 +23,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean isExists(Object searchKey);
 
-    @Override
-    public abstract List<Resume> getAllSorted();
+    public abstract List<Resume> getListFromStorage();
 
     @Override
     public void save(Resume r) {
@@ -51,8 +49,11 @@ public abstract class AbstractStorage implements Storage {
         doDelete(searchKey);
     }
 
-    protected List<Resume> getSortedCollection(List<Resume> listToSort) {
-        return listToSort.stream().sorted(RESUME_WITH_FULL_NAME_COMPARATOR).collect(Collectors.toList());
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> listFromStorage = getListFromStorage();
+        listFromStorage.sort(RESUME_WITH_FULL_NAME_COMPARATOR);
+        return listFromStorage;
     }
 
     private Object getSearchKeyIfNotExist(String uuid) {
