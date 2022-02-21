@@ -33,7 +33,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getListFromStorage() {
+    public List<Resume> getListResumesFromStorage() {
         return listStorage;
     }
 

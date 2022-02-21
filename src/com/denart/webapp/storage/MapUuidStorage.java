@@ -52,7 +52,7 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getListFromStorage() {
+    public List<Resume> getListResumesFromStorage() {
         return new ArrayList<>(mapStorage.values());
     }
 }
