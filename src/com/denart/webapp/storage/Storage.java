@@ -4,7 +4,7 @@ import com.denart.webapp.model.Resume;
 
 import java.util.List;
 
-public interface Storage {
+public interface Storage<T> {
 
     void clear();
 

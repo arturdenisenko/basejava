@@ -5,26 +5,26 @@ import com.denart.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
     private final List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, Integer searchKey) {
         listStorage.add(r);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return listStorage.get((Integer) searchKey);
+    protected Resume doGet(Integer searchKey) {
+        return listStorage.get(searchKey);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
+    protected void doUpdate(Resume r, Integer searchKey) {
         listStorage.set((Integer) searchKey, r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
+    protected void doDelete(Integer searchKey) {
         listStorage.remove(((Integer) searchKey).intValue());
     }
     @Override
@@ -53,7 +53,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExists(Object searchKey) {
+    protected boolean isExists(Integer searchKey) {
         return searchKey != null;
     }
 }
