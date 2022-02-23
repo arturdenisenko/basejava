@@ -6,8 +6,11 @@ import com.denart.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SK> implements Storage {
+
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     public final static Comparator<Resume> RESUME_WITH_FULL_NAME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
 
@@ -27,30 +30,35 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void save(Resume r) {
+        LOG.info("Save " + r);
         SK searchKey = getSearchKeyIfNotExist(r.getUuid());
         doSave(r, searchKey);
     }
 
     @Override
     public Resume get(String uuid) {
+        LOG.info("Get " + uuid);
         SK searchKey = getSearchKeyIfExist(uuid);
         return doGet(searchKey);
     }
 
     @Override
     public void update(Resume r) {
+        LOG.info("Update " + r);
         SK searchKey = getSearchKeyIfExist(r.getUuid());
         doUpdate(r, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         SK searchKey = getSearchKeyIfExist(uuid);
         doDelete(searchKey);
     }
 
     @Override
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted");
         List<Resume> listFromStorage = doGetResumesListFromStorage();
         listFromStorage.sort(RESUME_WITH_FULL_NAME_COMPARATOR);
         return listFromStorage;
@@ -59,6 +67,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getSearchKeyIfNotExist(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (isExists(searchKey)) {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
         return searchKey;
@@ -67,6 +76,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getSearchKeyIfExist(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (!isExists(searchKey)) {
+            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
