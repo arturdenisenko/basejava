@@ -20,12 +20,12 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void doUpdate(Resume r, Integer searchKey) {
-        listStorage.set((Integer) searchKey, r);
+        listStorage.set(searchKey, r);
     }
 
     @Override
     protected void doDelete(Integer searchKey) {
-        listStorage.remove(((Integer) searchKey).intValue());
+        listStorage.remove((searchKey).intValue());
     }
     @Override
     public void clear() {
@@ -33,7 +33,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public List<Resume> doGetResumesListFromStorage() {
+    public List<Resume> getResumesList() {
         return listStorage;
     }
 

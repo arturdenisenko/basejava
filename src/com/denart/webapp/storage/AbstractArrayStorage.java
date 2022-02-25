@@ -35,24 +35,24 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     protected Resume doGet(Integer searchKey) {
-        return storage[(int) searchKey];
+        return storage[searchKey];
     }
 
     @Override
     protected void doUpdate(Resume r, Integer searchKey) {
-        storage[(int) searchKey] = r;
+        storage[searchKey] = r;
     }
 
     @Override
     protected void doDelete(Integer searchKey) {
-        fillDeletedElement((int) searchKey);
+        fillDeletedElement(searchKey);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public List<Resume> doGetResumesListFromStorage() {
-        return (Arrays.stream(Arrays.copyOfRange(storage, 0, size)).collect(Collectors.toList()));
+    public List<Resume> getResumesList() {
+        return Arrays.stream(storage).limit(size).collect(Collectors.toList());
     }
 
 
@@ -63,6 +63,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     protected boolean isExists(Integer searchKey) {
-        return (int) searchKey >= 0;
+        return searchKey >= 0;
     }
 }

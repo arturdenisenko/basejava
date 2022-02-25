@@ -16,13 +16,13 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    public List<Resume> doGetResumesListFromStorage() {
+    public List<Resume> getResumesList() {
         return new ArrayList<>(storageMap.values());
     }
 
     @Override
     protected Resume doGet(Resume searchKey) {
-        return (Resume) searchKey;
+        return searchKey;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected void doDelete(Resume searchKey) {
-        storageMap.remove(((Resume) searchKey).getUuid());
+        storageMap.remove((searchKey).getUuid());
     }
 
     @Override
