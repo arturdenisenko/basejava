@@ -2,12 +2,13 @@ package com.denart.webapp.storage;
 
 import com.denart.webapp.exception.ExistStorageException;
 import com.denart.webapp.exception.NotExistStorageException;
-import com.denart.webapp.model.Resume;
+import com.denart.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.denart.webapp.storage.AbstractStorage.RESUME_WITH_FULL_NAME_COMPARATOR;
 import static org.junit.Assert.assertEquals;
@@ -28,15 +29,59 @@ public abstract class AbstractStorageTest {
     protected static final String FULL_NAME_4 = "POLINSKII ILYA";
     protected static final String DUMMY_FULL_NAME = "DUMMY";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1, curentPositon, contacts, sections);
-    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2, curentPositon, contacts, sections);
-    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3, curentPositon, contacts, sections);
-    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4, curentPositon, contacts, sections);
+    protected static Map<ContactsType, String> CONTACTS_MAP_1;
+    protected static Map<ContactsType, String> CONTACTS_MAP_2;
+    protected static Map<ContactsType, String> CONTACTS_MAP_3;
+    protected static Map<ContactsType, String> CONTACTS_MAP_4;
+
+    protected static Map<SectionType, AbstractSection> SECTIONS_MAP_1;
+    protected static Map<SectionType, AbstractSection> SECTIONS_MAP_3;
+    protected static Map<SectionType, AbstractSection> SECTIONS_MAP_2;
+    protected static Map<SectionType, AbstractSection> SECTIONS_MAP_4;
+
+    protected final static TextSection OBJECTIVE_1 =
+            new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+    protected final static TextSection OBJECTIVE_2 =
+            new TextSection("Ведущий бизнес аналитик в компании EPAM");
+    protected final static TextSection OBJECTIVE_3 =
+            new TextSection("Middle Java Developer");
+    protected final static TextSection OBJECTIVE_4 =
+            new TextSection("Junior Java разработчик");
+
+    protected final static TextSection PERSONAL_1 =
+            new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+    protected final static TextSection PERSONAL_2 =
+            new TextSection("Просто замечательный человек");
+    protected final static TextSection PERSONAL_3 =
+            new TextSection("Многранная личность и знаю много анекдотов");
+    protected final static TextSection PERSONAL_4 =
+            new TextSection("Восхититилен, не пью");
+
+
+
+    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1, CONTACTS_MAP_1, SECTIONS_MAP_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2, CONTACTS_MAP_2, SECTIONS_MAP_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3, CONTACTS_MAP_3, SECTIONS_MAP_3);
+    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4, CONTACTS_MAP_4, SECTIONS_MAP_4);
 
     private static final List<Resume> RESUMES_EQUIVALENT_LIST = new ArrayList<>();
 
 
     static {
+        CONTACTS_MAP_1.put(ContactsType.PHONE, "+52957293131");
+        CONTACTS_MAP_1.put(ContactsType.SKYPE, "mySkype");
+        CONTACTS_MAP_1.put(ContactsType.EMAIL, "fasdfas@mail.ru");
+        CONTACTS_MAP_1.put(ContactsType.LINKEDIN, "LinkedIN.com");
+        CONTACTS_MAP_1.put(ContactsType.GITHUB, "github.com");
+        CONTACTS_MAP_1.put(ContactsType.STACKOVERFLOW, "stackoverflow.com");
+        CONTACTS_MAP_1.put(ContactsType.HOMEPAGE, "www.go.ry");
+
+        SECTIONS_MAP_1.put(SectionType.OBJECTIVE, OBJECTIVE_1);
+        SECTIONS_MAP_1.put(SectionType.PERSONAL, PERSONAL_1);
+        SECTIONS_MAP_1.put(SectionType.ACHIEVEMENT,)
+
+
+
         RESUMES_EQUIVALENT_LIST.add(RESUME_1);
         RESUMES_EQUIVALENT_LIST.add(RESUME_2);
         RESUMES_EQUIVALENT_LIST.add(RESUME_3);
@@ -91,7 +136,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume testResume = new Resume(UUID_3, FULL_NAME_3, curentPositon, contacts, sections);
+        Resume testResume = new Resume(UUID_3, FULL_NAME_3, CONTACTS_MAP_3, SECTIONS_MAP_3);
         storage.update(testResume);
         assertSame(testResume, storage.get(UUID_3));
     }

@@ -12,26 +12,24 @@ public class Resume {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-    private final String currentPosition;
 
     private final Map<ContactsType, String> contacts;
     private final Map<SectionType, AbstractSection> sections;
 
 
-    public Resume(String fullName, String currentPosition,
+    public Resume(String fullName,
                   Map<ContactsType, String> contacts, Map<SectionType, AbstractSection> sections) {
-        this(UUID.randomUUID().toString(), fullName, currentPosition, contacts, sections);
+        this(UUID.randomUUID().toString(), fullName, contacts, sections);
     }
 
-    public Resume(String uuid, String fullName, String currentPosition,
+    public Resume(String uuid, String fullName,
                   Map<ContactsType, String> contacts, Map<SectionType, AbstractSection> sections) {
 
-        Objects.requireNonNull(currentPosition, "currentPosition must not be null");
+
         Objects.requireNonNull(contacts, "contacts must not be null");
         Objects.requireNonNull(sections, "sections must not be null");
         Objects.requireNonNull(uuid, "uuid must not be null");
         Objects.requireNonNull(fullName, "fullName must not be null");
-        this.currentPosition = currentPosition;
         this.contacts = contacts;
         this.sections = sections;
         this.uuid = uuid;
@@ -44,10 +42,6 @@ public class Resume {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public String getCurrentPosition() {
-        return currentPosition;
     }
 
     public Map<ContactsType, String> getContacts() {
