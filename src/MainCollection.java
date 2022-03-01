@@ -13,10 +13,10 @@ public class MainCollection {
     private static final String FULL_NAME_3 = "VOSTRECOV PETR";
     private static final String FULL_NAME_4 = "POLINSKII ILYA";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1, curentPositon, contacts, sections);
+    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2, curentPositon, contacts, sections);
+    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3, curentPositon, contacts, sections);
+    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4, curentPositon, contacts, sections);
 
     public static void main(String[] args) {
 

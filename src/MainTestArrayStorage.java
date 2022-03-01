@@ -20,10 +20,10 @@ public class MainTestArrayStorage {
         final String FULL_NAME_3 = "VOSTRECOV PETR";
         final String FULL_NAME_4 = "POLINSKII ILYA";
 
-        final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
-        final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
-        final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
-        final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+        final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1, curentPositon, contacts, sections);
+        final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2, curentPositon, contacts, sections);
+        final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3, curentPositon, contacts, sections);
+        final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4, curentPositon, contacts, sections);
 
         ARRAY_STORAGE.save(RESUME_4);
         ARRAY_STORAGE.save(RESUME_2);

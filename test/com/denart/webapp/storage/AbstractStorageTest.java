@@ -28,10 +28,10 @@ public abstract class AbstractStorageTest {
     protected static final String FULL_NAME_4 = "POLINSKII ILYA";
     protected static final String DUMMY_FULL_NAME = "DUMMY";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1, curentPositon, contacts, sections);
+    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2, curentPositon, contacts, sections);
+    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3, curentPositon, contacts, sections);
+    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4, curentPositon, contacts, sections);
 
     private static final List<Resume> RESUMES_EQUIVALENT_LIST = new ArrayList<>();
 
@@ -91,7 +91,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume testResume = new Resume(UUID_3, FULL_NAME_3);
+        Resume testResume = new Resume(UUID_3, FULL_NAME_3, curentPositon, contacts, sections);
         storage.update(testResume);
         assertSame(testResume, storage.get(UUID_3));
     }
